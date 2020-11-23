@@ -8,7 +8,7 @@ def register(data):
     user = UserModel(data, chart_id)
     try:
         user.save()
-        return user
+        return user.chart_id
     except IntegrityError as err:
         print("That username is already taken try another.")
         return None
