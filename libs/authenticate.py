@@ -3,9 +3,10 @@ import bcrypt
 
 def authenticate(data):
     u_name = data['u_name']
-    user = User.find_one(u_name, "password")
+    user = User.find_one(u_name, "password, chart_id")
     if user:
-        return compare_hash(user[0], data['password'])
+        if compare_hash(user[0], data['password']):
+        	return user[1]
     else:
         print("User not found :(")
 

@@ -2,18 +2,24 @@ import inquirer
 from libs.register import register
 from libs.authenticate import authenticate
 
-def read_option():
+
+# This function is called first
+# authenticate or register the user
+def greet():
     while True:
         option = inquirer.prompt([inquirer.List('choice', message="Choose an option", choices=["Login", "Signup"])])
         if option['choice'] == 'Login':
-            auth = authenticate(read_creds()) 
-            if auth:
-                return auth
+            user = authenticate(read_creds()) 
+            if user:
+                return user
         else:
-            registerd = register(read_creds(True))
-            if registerd:
-                return registerd
+            user = register(read_creds(True))
+            if user:
+                return user
 
+
+# helper function for greet
+# read the user credentials
 def read_creds(auth = False):
     questions = [
         inquirer.Text('u_name', message="Please enter your user name"),
@@ -24,3 +30,4 @@ def read_creds(auth = False):
         questions.insert(0, inquirer.Text('name', message="Please enter your name"),)
 
     return inquirer.prompt(questions)
+
