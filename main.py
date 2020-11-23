@@ -1,16 +1,5 @@
-import inquirer
-from inquirer.themes import GreenPassion
-from models.userModel import UserModel  
+from  libs.questions import *
 
 if __name__ == '__main__':
+	status = read_option()
 
-    questions = [
-        inquirer.Text('name', message="Please enter your name"),
-        inquirer.Text('u_name', message="Please enter your user name"),
-        inquirer.Password('password', message='Please enter your password'),
-        ]
-
-    answers = inquirer.prompt(questions, theme=GreenPassion())
-
-    user = UserModel(answers)
-    print(user)

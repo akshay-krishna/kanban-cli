@@ -12,7 +12,11 @@ class UserModel(object):
 			self.password = hash_gen(data['password'])
 			self.conn = conn
 		def save(self):
-			print(self.conn)
+			query = f"""INSERT INTO users(name, u_name, password) VALUES('{self.name}', '{self.u_name}', '{self.password.decode("utf-8")}')"""
+			cur = self.conn.cursor()
+			cur.execute(query)
+			self.conn.commit()
+
 		def __str__(self):
 			return f"{self.name} {self.u_name} {self.password}"
 
@@ -21,11 +25,14 @@ class UserModel(object):
 
 
 	@classmethod
-	def find_one(cls):
-		pass
+	def find_one(cls, u_name, options = "name, u_name"):
+		query = f"SELECT {options} FROM users WHERE u_name='{u_name}'"
+		cur = cls.conn.cursor()
+		cur.execute(query)
+		return cur.fetchone()
 
 	@classmethod
-	def find_one_and_update(cls):
+	def find_one_and_update(cls, u_name):
 		pass
 
 	@classmethod
